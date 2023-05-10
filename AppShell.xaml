@@ -3,12 +3,18 @@
     x:Class="MyChatGPT.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:MyChatGPT"
-    Shell.FlyoutBehavior="Disabled">
-
+    xmlns:view="clr-namespace:MyChatGPT.Views"
+    Shell.FlyoutBehavior="Flyout">
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+        Title="聊天"
+        ContentTemplate="{DataTemplate view:ChatPage}"
+        Route="ChatPage" />
+    <ShellContent
+        Title="画画"
+        ContentTemplate="{DataTemplate view:DrawPage}"
+        Route="DrawPage" />
+    <ShellContent
+        Title="系统设置"
+        ContentTemplate="{DataTemplate view:SettingsPage}"
+        Route="SettingsPage" />
 </Shell>

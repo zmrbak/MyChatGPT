@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MyChatGPT.Views.ChatPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:b="clr-namespace:MyChatGPT.Behaviors"
+    xmlns:vm="clr-namespace:MyChatGPT.ViewModel"
+    Background="{StaticResource Key=Gray100}">
+    <ContentPage.BindingContext>
+        <vm:ChatViewModel />
+    </ContentPage.BindingContext>
+    <StackLayout
+        Margin="5"
+        BackgroundColor="Transparent"
+        VerticalOptions="StartAndExpand">
+        <ScrollView VerticalOptions="FillAndExpand">
+            <StackLayout BindableLayout.ItemsSource="{Binding Chats}" Orientation="Vertical">
+                <StackLayout.Behaviors>
+                    <b:ScrollViewAutoScrollBehavior />
+                </StackLayout.Behaviors>
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Vertical">
+                            <StackLayout
+                                Margin="5"
+                                HorizontalOptions="Start"
+                                Orientation="Horizontal">
+                                <Border
+                                    Margin="32,0,0,0"
+                                    Padding="5"
+                                    BackgroundColor="White"
+                                    HorizontalOptions="EndAndExpand">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="5" />
+                                    </Border.StrokeShape>
+                                    <Label LineBreakMode="CharacterWrap" Text="{Binding Question}" />
+                                </Border>
+                                <Path
+                                    Margin="-5,2,5,0"
+                                    Data="M0 -12 -12 0 -12 -25 z"
+                                    Fill="White"
+                                    ZIndex="1" />
+                                <Border VerticalOptions="Start">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="16" />
+                                    </Border.StrokeShape>
+                                    <ImageButton
+                                        HeightRequest="32"
+                                        Source="user.png"
+                                        WidthRequest="32" />
+                                </Border>
+                            </StackLayout>
+                            <StackLayout
+                                Margin="5"
+                                HorizontalOptions="Start"
+                                Orientation="Horizontal"
+                                VerticalOptions="FillAndExpand">
+                                <Border VerticalOptions="Start">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="16" />
+                                    </Border.StrokeShape>
+                                    <Image
+                                        HeightRequest="32"
+                                        Source="chatgpt.png"
+                                        WidthRequest="32" />
+                                </Border>
+                                <Path
+                                    Margin="5,2,-5,0"
+                                    Data="M0 12 12 0 12 25 z"
+                                    Fill="White"
+                                    ZIndex="1" />
+                                <Border
+                                    Margin="0,0,32,0"
+                                    Padding="5"
+                                    BackgroundColor="White"
+                                    HorizontalOptions="StartAndExpand">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="5" />
+                                    </Border.StrokeShape>
+                                    <Label LineBreakMode="CharacterWrap" Text="{Binding Answer}" />
+                                </Border>
+                            </StackLayout>
+                        </StackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </ScrollView>
+        <StackLayout Orientation="Horizontal">
+            <Button
+                Command="{Binding ClearAllCommand}"
+                HorizontalOptions="Start"
+                Text="清除" />
+            <Border
+                BackgroundColor="White"
+                HorizontalOptions="FillAndExpand"
+                StrokeThickness="1">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5" />
+                </Border.StrokeShape>
+                <Editor
+                    HorizontalOptions="FillAndExpand"
+                    HorizontalTextAlignment="Start"
+                    Placeholder="请向机器人提问..."
+                    Text="{Binding Question}"
+                    VerticalTextAlignment="End" />
+            </Border>
+            <Button Command="{Binding SubmitCommand}" Text="发送" />
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MyChatGPT.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="系统设置">
+    <VerticalStackLayout>
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label
+                HorizontalTextAlignment="End"
+                Text="服务器："
+                VerticalOptions="Center" />
+            <Border
+                Grid.Row="0"
+                Grid.Column="1"
+                StrokeThickness="1">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5" />
+                </Border.StrokeShape>
+                <Entry x:Name="openAiServer" HorizontalOptions="FillAndExpand" />
+            </Border>
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                HorizontalTextAlignment="End"
+                Text="用户账号："
+                VerticalOptions="Center" />
+            <Border
+                Grid.Row="1"
+                Grid.Column="1"
+                StrokeThickness="1">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5" />
+                </Border.StrokeShape>
+                <Entry
+                    x:Name="openAiKey"
+                    ClearButtonVisibility="WhileEditing"
+                    HorizontalOptions="FillAndExpand"
+                    Placeholder="请输入用户账号，即openai key" />
+            </Border>
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                HorizontalTextAlignment="End"
+                Text="用户密码："
+                VerticalOptions="Center" />
+            <Border
+                Grid.Row="2"
+                Grid.Column="1"
+                StrokeThickness="1">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5" />
+                </Border.StrokeShape>
+                <Entry
+                    x:Name="userPassword"
+                    ClearButtonVisibility="WhileEditing"
+                    HorizontalOptions="FillAndExpand"
+                    IsPassword="True" />
+            </Border>
+            <HorizontalStackLayout
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                HorizontalOptions="Center">
+                <Button
+                    Margin="5"
+                    Clicked="Button_Clicked_1"
+                    HorizontalOptions="Center"
+                    Text="取消"
+                    WidthRequest="80" />
+                <Button
+                    Margin="5"
+                    Clicked="Button_Clicked"
+                    HorizontalOptions="Center"
+                    Text="保存"
+                    WidthRequest="80" />
+            </HorizontalStackLayout>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>
