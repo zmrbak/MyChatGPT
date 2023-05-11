@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0-android33.0</TargetFrameworks>
+		<TargetFrameworks>net8.0-android33.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
 		<OutputType>Exe</OutputType>
@@ -49,10 +49,12 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\chatgpt.png" />
+	  <None Remove="Resources\Images\up.svg" />
 	  <None Remove="Resources\Images\user.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="CommunityToolkit.Maui" Version="5.1.0" />
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
 	  <PackageReference Include="OpenAI-DotNet" Version="6.8.1" />
 	</ItemGroup>

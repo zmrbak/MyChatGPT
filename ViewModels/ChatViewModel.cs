@@ -28,26 +28,16 @@ namespace MyChatGPT.ViewModel
             if (Question.Length == 0) return;
             var chat = new Chat();
             chat.Question = Question.Trim();
-            chat.Answer = "...";
+            chat.Answer = "";
             Chats.Add(chat);
 
             Question = "";
-
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            _ = Task.Run(async () =>
-            {
-                while (!cancellationTokenSource.Token.IsCancellationRequested)
-                {
-                    chat.Answer += ".";
-                    await Task.Delay(500);
-                }
-            });
 
             try
             {
                 HttpClientHandler clientHandler = new HttpClientHandler();
                 clientHandler.ServerCertificateCustomValidationCallback += (sender, cert, chain, sslPolicyErrors) => { return true; };
-                clientHandler.SslProtocols = SslProtocols.Tls;
+                clientHandler.SslProtocols = SslProtocols.None;
                 var httpClient = new HttpClient(clientHandler);
 
                 //var auth = new OpenAIAuthentication($"sess-aAbBcCdDeE123456789");
@@ -70,17 +60,11 @@ namespace MyChatGPT.ViewModel
                 }
 
                 string oldAnswer = "";
-                var waiteCanceled = false;
                 var chatRequest = new ChatRequest(messages);
                 await openAIClient.ChatEndpoint.StreamCompletionAsync(chatRequest, result =>
                 {
-                    if (waiteCanceled == false)
-                    {
-                        cancellationTokenSource.Cancel();
-                        waiteCanceled = true;
-                    }
-
-                    oldAnswer += result.FirstChoice;
+                    var firstChoice = result.FirstChoice.ToString();
+                    oldAnswer += firstChoice;
 
                     //ÌÞ³ýÖØ¸´
                     var len = oldAnswer.Length;
@@ -90,8 +74,8 @@ namespace MyChatGPT.ViewModel
                     }
                     else
                     {
-                        chat.Answer = "";
-                        chat.Answer = oldAnswer;
+                        //chat.Answer = null;
+                        chat.Answer += firstChoice;
                     }
                 });
                 questionChanged = false;

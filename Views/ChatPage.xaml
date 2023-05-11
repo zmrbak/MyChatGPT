@@ -4,6 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:b="clr-namespace:MyChatGPT.Behaviors"
+    xmlns:t="clr-namespace:MyChatGPT.EventTriggers"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:MyChatGPT.ViewModel"
     Background="{StaticResource Key=Gray100}">
     <ContentPage.BindingContext>
@@ -13,7 +15,7 @@
         Margin="5"
         BackgroundColor="Transparent"
         VerticalOptions="StartAndExpand">
-        <ScrollView VerticalOptions="FillAndExpand">
+        <ScrollView FlexLayout.Grow="1" VerticalOptions="FillAndExpand">
             <StackLayout BindableLayout.ItemsSource="{Binding Chats}" Orientation="Vertical">
                 <StackLayout.Behaviors>
                     <b:ScrollViewAutoScrollBehavior />
@@ -21,90 +23,150 @@
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Orientation="Vertical">
-                            <StackLayout
-                                Margin="5"
-                                HorizontalOptions="Start"
-                                Orientation="Horizontal">
-                                <Border
-                                    Margin="32,0,0,0"
+                            <Grid Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    Margin="40,0,0,0"
                                     Padding="5"
                                     BackgroundColor="White"
-                                    HorizontalOptions="EndAndExpand">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="5" />
-                                    </Border.StrokeShape>
-                                    <Label LineBreakMode="CharacterWrap" Text="{Binding Question}" />
-                                </Border>
+                                    HorizontalOptions="End"
+                                    LineBreakMode="CharacterWrap"
+                                    Text="{Binding Question}" />
                                 <Path
-                                    Margin="-5,2,5,0"
-                                    Data="M0 -12 -12 0 -12 -25 z"
+                                    Grid.Column="1"
+                                    Margin="-5,2,-5,0"
+                                    Data="M0 0 0 25 12 12 z"
                                     Fill="White"
+                                    HeightRequest="25"
+                                    VerticalOptions="Start"
+                                    WidthRequest="25"
                                     ZIndex="1" />
-                                <Border VerticalOptions="Start">
+                                <Border Grid.Column="2" VerticalOptions="Start">
                                     <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="16" />
+                                        <RoundRectangle CornerRadius="50" />
                                     </Border.StrokeShape>
                                     <ImageButton
                                         HeightRequest="32"
                                         Source="user.png"
                                         WidthRequest="32" />
                                 </Border>
-                            </StackLayout>
-                            <StackLayout
-                                Margin="5"
-                                HorizontalOptions="Start"
-                                Orientation="Horizontal"
-                                VerticalOptions="FillAndExpand">
-                                <Border VerticalOptions="Start">
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Border
+                                    Grid.Column="0"
+                                    BackgroundColor="Transparent"
+                                    IsVisible="True"
+                                    VerticalOptions="Start">
                                     <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="16" />
+                                        <RoundRectangle CornerRadius="50" />
                                     </Border.StrokeShape>
                                     <Image
                                         HeightRequest="32"
                                         Source="chatgpt.png"
                                         WidthRequest="32" />
                                 </Border>
+                                <ActivityIndicator
+                                    Grid.Column="1"
+                                    HeightRequest="30"
+                                    IsRunning="False"
+                                    IsVisible="False"
+                                    VerticalOptions="Start">
+                                    <ActivityIndicator.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding Source={x:Reference labelAnswer}, Path=Text}"
+                                            TargetType="ActivityIndicator"
+                                            Value="">
+                                            <Setter Property="IsRunning" Value="True" />
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                    </ActivityIndicator.Triggers>
+                                </ActivityIndicator>
                                 <Path
-                                    Margin="5,2,-5,0"
+                                    Grid.Column="2"
                                     Data="M0 12 12 0 12 25 z"
                                     Fill="White"
-                                    ZIndex="1" />
-                                <Border
-                                    Margin="0,0,32,0"
+                                    VerticalOptions="Start"
+                                    ZIndex="1">
+                                    <Path.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding Source={x:Reference labelAnswer}, Path=Text}"
+                                            TargetType="Path"
+                                            Value="">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </Path.Triggers>
+                                </Path>
+                                <Label
+                                    x:Name="labelAnswer"
+                                    Grid.Column="3"
+                                    Margin="-1,0,40,0"
                                     Padding="5"
                                     BackgroundColor="White"
-                                    HorizontalOptions="StartAndExpand">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="5" />
-                                    </Border.StrokeShape>
-                                    <Label LineBreakMode="CharacterWrap" Text="{Binding Answer}" />
-                                </Border>
-                            </StackLayout>
+                                    FlexLayout.Grow="1"
+                                    HorizontalOptions="Start"
+                                    LineBreakMode="CharacterWrap"
+                                    Text="{Binding Answer}">
+                                    <Label.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding Source={x:Reference labelAnswer}, Path=Text}"
+                                            TargetType="Label"
+                                            Value="">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Grid>
                         </StackLayout>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>
         </ScrollView>
-        <StackLayout Orientation="Horizontal">
+        <Grid VerticalOptions="End">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <Button
+                Grid.Column="0"
                 Command="{Binding ClearAllCommand}"
+                FlexLayout.Grow="1"
                 HorizontalOptions="Start"
-                Text="清除" />
-            <Border
+                Text="清除"
+                VerticalOptions="End" />
+            <Editor
+                Grid.Column="1"
+                AutoSize="TextChanges"
                 BackgroundColor="White"
-                HorizontalOptions="FillAndExpand"
-                StrokeThickness="1">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="5" />
-                </Border.StrokeShape>
-                <Editor
-                    HorizontalOptions="FillAndExpand"
-                    HorizontalTextAlignment="Start"
-                    Placeholder="请向机器人提问..."
-                    Text="{Binding Question}"
-                    VerticalTextAlignment="End" />
-            </Border>
-            <Button Command="{Binding SubmitCommand}" Text="发送" />
-        </StackLayout>
+                HorizontalTextAlignment="Start"
+                Placeholder="请向机器人提问..."
+                Text="{Binding Question}" />
+            <Button
+                Grid.Column="2"
+                Command="{Binding SubmitCommand}"
+                HorizontalOptions="End"
+                Text="发送"
+                VerticalOptions="End" />
+        </Grid>
     </StackLayout>
 </ContentPage>
