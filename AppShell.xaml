@@ -9,10 +9,10 @@
         Title="聊天"
         ContentTemplate="{DataTemplate view:ChatPage}"
         Route="ChatPage" />
-    <ShellContent
+    <!--<ShellContent
         Title="画画"
         ContentTemplate="{DataTemplate view:DrawPage}"
-        Route="DrawPage" />
+        Route="DrawPage" />-->
     <ShellContent
         Title="系统设置"
         ContentTemplate="{DataTemplate view:SettingsPage}"

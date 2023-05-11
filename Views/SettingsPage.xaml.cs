@@ -26,10 +26,12 @@ public partial class SettingsPage : ContentPage
         GlobalSettings.SaveOpenAiSettings();
 
         await DisplayAlert("信息", "保存配置成功！", "OK");
+        await Shell.Current.GoToAsync("//ChatPage");
     }
 
-    private void Button_Clicked_1(object sender, EventArgs e)
+    private async void Button_Clicked_1(object sender, EventArgs e)
     {
         SettingsPage_Loaded(sender, e);
+        await Shell.Current.GoToAsync("//ChatPage");
     }
 }
