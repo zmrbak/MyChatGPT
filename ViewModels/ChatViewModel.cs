@@ -90,10 +90,12 @@ namespace MyChatGPT.ViewModel
         private void ClearAll()
         {
             Chats.Clear();
+            Question = "";
             questionChanged = true;
         }
 
         [ObservableProperty]
         ObservableCollection<Chat> chats = new();
+
     }
 }
