@@ -42,12 +42,12 @@
                                     Text="{Binding Question}" />
                                 <Path
                                     Grid.Column="1"
-                                    Margin="-5,2,-5,0"
+                                    Margin="-2,0,1,0"
                                     Data="M0 0 0 25 12 12 z"
                                     Fill="White"
                                     HeightRequest="25"
                                     VerticalOptions="Start"
-                                    WidthRequest="25"
+                                    WidthRequest="12"
                                     ZIndex="1" />
                                 <Border Grid.Column="2" VerticalOptions="Start">
                                     <Border.StrokeShape>
