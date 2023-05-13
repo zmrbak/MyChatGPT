@@ -15,7 +15,7 @@
         Margin="5"
         BackgroundColor="Transparent"
         VerticalOptions="StartAndExpand">
-        <ScrollView VerticalOptions="Fill">
+        <ScrollView VerticalOptions="FillAndExpand">
             <StackLayout BindableLayout.ItemsSource="{Binding Chats}" Orientation="Vertical">
                 <StackLayout.Behaviors>
                     <b:ScrollViewAutoScrollBehavior />
